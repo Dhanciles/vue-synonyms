@@ -38,6 +38,7 @@ export default {
         return acc
       }, []))
       .catch(error => console.log(error))
+      this.search = ''
     }
   }
 }
