@@ -1,16 +1,40 @@
 <template>
   <div id="app">
-    <Header />
+    <header>
+      <form @submit="searchForSynonyms(search)" v-on:submit.prevent="onSubmit">
+        <input type="text" class="search" name="search" placeholder="Search" v-model="search"  />
+      </form>
+    </header>
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
+import  key   from './constants.js'
 
 export default {
   name: 'app', 
-  components: {
-    Header
+    data: function () {
+    return {
+      search: '',
+      data: []
+    } 
+  }, 
+  methods: {
+    searchForSynonyms: function (search) {
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${this.search}?key=${key}`
+      console.log(url)
+      fetch(url)
+      .then(response => response.json())
+      .then(results => this.$data.data = results.reduce((acc, currentResult) => {
+        currentResult.meta.syns.forEach(item => {
+          item.forEach(element => {
+            acc.push(element)
+          })
+        })
+        return acc
+      }, []))
+      .catch(error => console.log(error))
+    }
   }
 }
 
