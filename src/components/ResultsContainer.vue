@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <article v-for="data in data">
-      <p v-on:click="synonym">{{data}}</p>
+      <p @click="getAdditionalSynonyms(synonym)" v-on:submit.prevent="onClick">{{data}}</p>
     </article>
   </section>
 </template>
