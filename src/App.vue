@@ -5,15 +5,20 @@
         <input type="text" class="search" name="search" placeholder="Search" v-model="search"  />
       </form>
     </header>
+    <ResultsContainer :data="data"/>
   </div>
 </template>
 
 <script>
 import  key   from './constants.js'
+import ResultsContainer from './components/ResultsContainer.vue'
 
 export default {
-  name: 'app', 
-    data: function () {
+  name: 'app',
+  components: {
+    ResultsContainer
+  }, 
+  data: function () {
     return {
       search: '',
       data: []
@@ -22,7 +27,6 @@ export default {
   methods: {
     searchForSynonyms: function (search) {
       let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${this.search}?key=${key}`
-      console.log(url)
       fetch(url)
       .then(response => response.json())
       .then(results => this.$data.data = results.reduce((acc, currentResult) => {
@@ -47,6 +51,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh; 
+}
+
+header {
+  height: 20vh; 
+  width: 100%; 
+  background-color: #47B784; 
 }
 </style>
