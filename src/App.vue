@@ -25,18 +25,22 @@ export default {
     } 
   }, 
   methods: {
-    searchForSynonyms: function (search) {
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${search}?key=${key}`
-      fetch(url)
-      .then(response => response.json())
-      .then(results => this.$data.synonymList = results.reduce((acc, currentResult) => {
-        currentResult.meta.syns.forEach(item => {
+    cleaner: function (words) {
+      return words.reduce((acc, word) => {
+        word.meta.syns.forEach(item => {
           item.forEach(element => {
             acc.push(element)
           })
         })
         return acc
-      }, []))
+      }, [])
+    },
+
+    searchForSynonyms: function (search) {
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${search}?key=${key}`
+      fetch(url)
+      .then(response => response.json())
+      .then(results => this.$data.synonymList = this.cleaner(results))
       .catch(error => console.log(error))
       this.search = ''
     }

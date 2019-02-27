@@ -26,19 +26,23 @@ export default {
     }
   }, 
   methods: {
-    getAdditionalSynonyms: function (synonym) {
-      this.selected = true; 
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym.synonym}?key=${key}`
-      fetch(url)
-      .then(response => response.json())
-      .then(results => this.$data.additionalSynonymList = results.reduce((acc, currentResult) => {
-        currentResult.meta.syns.forEach(item => {
+    cleaner: function (words) {
+      return words.reduce((acc, word) => {
+        word.meta.syns.forEach(item => {
           item.forEach(element => {
             acc.push(element)
           })
         })
         return acc
-      }, []))
+      }, [])
+    },
+
+    getAdditionalSynonyms: function (synonym) {
+      this.selected = true; 
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym.synonym}?key=${key}`
+      fetch(url)
+      .then(response => response.json())
+      .then(results => this.$data.additionalSynonymList = this.cleaner(results))
       .catch(error => console.log(error))
     }
   }
@@ -80,5 +84,21 @@ export default {
     color: #ffffff; 
     font-size: 2rem; 
     font-weight: 800;
+  }
+
+  .additional-synonyms-container {
+    width: 60%;
+    display: flex; 
+    flex-flow: wrap; 
+    border-radius: 25px; 
+    background-color: #dee4eb; 
+    padding: 5px; 
+  }
+
+  .secondary-synonyms {
+    color: #47B784; 
+    font-size: 1rem; 
+    font-weight: 600; 
+    margin: 0 5px 0 5px; 
   }
 </style>
