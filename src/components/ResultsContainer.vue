@@ -1,7 +1,11 @@
 <template>
   <section class="container">
-    <article v-for="synonym in synonymList" :key="synonym.id">
-      <p @click="getAdditionalSynonyms({synonym})">{{synonym}}</p>
+    <article v-for="(synonym, index) in synonymList" :key="index">
+      <p class="initial-synonyms" @click="getAdditionalSynonyms({synonym})">{{synonym}}</p>
+
+      <template v-show="selected" v-for="(additionalSynonyms, index) in additionalSynonymList"  class="addtional-synonyms-container">
+        <p :key="index" class="secondary-synonyms">{{additionalSynonyms}}</p>
+      </template>
     </article>
   </section>
 </template>
@@ -17,14 +21,14 @@ export default {
   }, 
   data: function () {
     return {
-      additionalSynonymList: []
+      additionalSynonymList: [], 
+      selected: false
     }
   }, 
   methods: {
     getAdditionalSynonyms: function (synonym) {
-      console.log(synonym)
+      this.selected = true; 
       let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym.synonym}?key=${key}`
-      console.log(url)
       fetch(url)
       .then(response => response.json())
       .then(results => this.$data.additionalSynonymList = results.reduce((acc, currentResult) => {
@@ -46,7 +50,7 @@ export default {
   .container {
     background-color: #36495D; 
     width: 100%; 
-    height: 80vh; 
+    height: 85vh; 
     overflow: scroll;
     padding: 8px; 
   }
@@ -67,11 +71,11 @@ export default {
     color: #36495D; 
   }
 
-  article p:hover {
+  article .initial-synonyms:hover {
     color: #36495D; 
   }
 
-  p {
+  .initial-synonyms {
     margin: 3px 0 0 10px; 
     color: #ffffff; 
     font-size: 2rem; 

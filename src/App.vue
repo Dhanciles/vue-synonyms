@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <form @submit="searchForSynonyms(search)" v-on:submit.prevent="submit">
+      <form v-on:submit.prevent="searchForSynonyms(search)">
         <input type="text" class="search" name="search" placeholder="Search" v-model="search" />
       </form>
     </header>
@@ -56,8 +56,31 @@ export default {
 }
 
 header {
-  height: 20vh; 
+  height: 15vh; 
   width: 100%; 
   background-color: #47B784; 
+  display: flex;
+  padding: 8px; 
 }
+
+input {
+  height: 100px; 
+  width: 450px; 
+  border: none; 
+  border-bottom: 3px solid #dee4eb;
+  line-height: 1rem; 
+  font-size: 3rem; 
+  font-weight: 800; 
+  color: #dee4eb;  
+  background-color: #47B784; 
+  margin: 30px 0 0 30px; 
+  text-indent: 1rem; 
+}
+
+::placeholder {
+  font-size: 3rem; 
+  font-weight: 800; 
+  color: #dee4eb;
+}
+
 </style>
