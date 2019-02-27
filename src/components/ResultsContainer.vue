@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+     <h3 v-show="synonymList.length">Synonyms For - {{currentSearch}}</h3>
     <article class="synonym-container" v-for="(synonym, index) in synonymList" :key="index">
       <p class="initial-synonyms" @click="getAdditionalSynonyms({synonym})">{{synonym}}</p>
 
@@ -17,7 +18,8 @@ import key from '../constants.js'
 export default {
   name: 'ResultsContainer', 
   props: {
-    synonymList: Array
+    synonymList: Array, 
+    currentSearch: String
   }, 
   data: function () {
     return {

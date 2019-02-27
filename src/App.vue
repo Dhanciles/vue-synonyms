@@ -5,8 +5,7 @@
         <input type="text" class="search" name="search" placeholder="Search" v-model="search" />
       </form>
     </header>
-    <ResultsContainer :synonymList="synonymList"/>
-    <template v-if="synonymList.length">Synonyms For - {{search}}</template>
+    <ResultsContainer :synonymList="synonymList" :currentSearch="currentSearch"/>
   </div>
 </template>
 
@@ -22,7 +21,8 @@ export default {
   data: function () {
     return {
       search: '',
-      synonymList: []
+      synonymList: [], 
+      currentSearch: ''
     } 
   }, 
   methods: {
@@ -43,6 +43,7 @@ export default {
       .then(response => response.json())
       .then(results => this.$data.synonymList = this.cleaner(results))
       .catch(error => console.log(error))
+      this.currentSearch = this.search
       this.search = ''
     }
   }
