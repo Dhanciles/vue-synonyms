@@ -1,11 +1,11 @@
 <template>
   <section class="container">
-     <h3 v-show="synonymList.length">Synonyms For - {{currentSearch}}</h3>
-    <article class="synonym-container" v-for="(synonym, index) in synonymList" :key="index">
-      <p class="initial-synonyms" @click="getAdditionalSynonyms({synonym})">{{synonym}}</p>
+     <h3 v-if="synonymList.length">Synonyms For - {{currentSearch}}</h3>
+    <article class="synonym-container" v-for="(synonym, index) in synonymList" v-bind:key="index">
+      <p class="initial-synonyms" @click="getAdditionalSynonyms(synonym, index)">{{synonym}}</p>
 
-      <template v-show="selected" v-for="(additionalSynonyms, index) in additionalSynonymList"  class="addtional-synonyms-container">
-        <p :key="index" class="secondary-synonyms">{{additionalSynonyms}}</p>
+      <template  v-for="(additionalSynonyms, i) in additionalSynonymList"  class="addtional-synonyms-container">
+        <p :key="i" v-if="index === selectedIndex" class="secondary-synonyms">{{additionalSynonyms}}</p>
       </template>
     </article>
   </section>
@@ -13,7 +13,7 @@
 
 
 <script>
-import key from '../constants.js'
+import apiKey from '../constants.js'
 
 export default {
   name: 'ResultsContainer', 
@@ -24,7 +24,7 @@ export default {
   data: function () {
     return {
       additionalSynonymList: [], 
-      selected: false
+      selectedIndex: null
     }
   }, 
   methods: {
@@ -39,9 +39,10 @@ export default {
       }, [])
     },
 
-    getAdditionalSynonyms: function (synonym) {
-      this.selected = true; 
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym.synonym}?key=${key}`
+    getAdditionalSynonyms: function (synonym, key) {
+      console.log(key)
+      this.selectedIndex = key
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym}?key=${apiKey}`
       fetch(url)
       .then(response => response.json())
       .then(results => this.$data.additionalSynonymList = this.cleaner(results))
@@ -59,6 +60,12 @@ export default {
     height: 85vh; 
     overflow: scroll;
     padding: 8px; 
+  }
+
+  h3 {
+    color: #dee4eb;
+    font-size: 3rem; 
+    font-weight: 800; 
   }
 
   .synonym-container {

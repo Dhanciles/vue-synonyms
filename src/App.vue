@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import key from './constants.js'
+import apiKey from './constants.js'
 import ResultsContainer from './components/ResultsContainer.vue'
 
 export default {
@@ -38,7 +38,7 @@ export default {
     },
 
     searchForSynonyms: function (search) {
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${search}?key=${key}`
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${search}?key=${apiKey}`
       fetch(url)
       .then(response => response.json())
       .then(results => this.$data.synonymList = this.cleaner(results))
