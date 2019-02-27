@@ -68,6 +68,8 @@ export default {
     align-items: center; 
     padding: 8px; 
     margin: 15px auto; 
+    display: flex; 
+    flex-direction: column; 
   }
 
   .synonym-container:hover {

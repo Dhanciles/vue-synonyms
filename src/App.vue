@@ -6,6 +6,7 @@
       </form>
     </header>
     <ResultsContainer :synonymList="synonymList"/>
+    <template v-if="synonymList.length">Synonyms For - {{search}}</template>
   </div>
 </template>
 
