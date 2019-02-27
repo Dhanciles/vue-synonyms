@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <form @submit="searchForSynonyms(search)" v-on:submit.prevent="onSubmit">
+      <form @submit="searchForSynonyms(search)" v-on:submit.prevent="submit">
         <input type="text" class="search" name="search" placeholder="Search" v-model="search" />
       </form>
     </header>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import  key   from './constants.js'
+import key from './constants.js'
 import ResultsContainer from './components/ResultsContainer.vue'
 
 export default {
