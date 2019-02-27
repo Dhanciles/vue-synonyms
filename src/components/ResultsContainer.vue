@@ -1,7 +1,7 @@
 <template>
   <section class="container">
-    <article v-for="data in data">
-      <p @click="getAdditionalSynonyms(synonym)" v-on:submit.prevent="onClick">{{data}}</p>
+    <article v-for="synonym in synonymList">
+      <p @click="getAdditionalSynonyms({synonym})" v-on:submit.prevent="onClick">{{synonym}}</p>
     </article>
   </section>
 </template>
@@ -13,17 +13,18 @@ import  key   from '../constants.js'
 export default {
   name: 'ResultsContainer', 
   props: {
-    data: []
+    synonymList: []
   }, 
   data: function () {
     return {
-      synonym: '',
-      synonymResults: []
+      additionalSynonymList: []
     }
   }, 
   methods: {
     getAdditionalSynonyms: function (synonym) {
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${this.synonym}?key=${key}`
+      console.log(synonym)
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym.synonym}?key=${key}`
+      console.log(url)
       fetch(url)
       .then(response => response.json())
       .then(results => this.$data.synonymResults = results.reduce((acc, currentResult) => {

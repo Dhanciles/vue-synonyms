@@ -2,10 +2,10 @@
   <div id="app">
     <header>
       <form @submit="searchForSynonyms(search)" v-on:submit.prevent="onSubmit">
-        <input type="text" class="search" name="search" placeholder="Search" v-model="search"  />
+        <input type="text" class="search" name="search" placeholder="Search" v-model="search" />
       </form>
     </header>
-    <ResultsContainer :data="data"/>
+    <ResultsContainer :synonymList="synonymList"/>
   </div>
 </template>
 
@@ -21,15 +21,15 @@ export default {
   data: function () {
     return {
       search: '',
-      data: []
+      synonymList: []
     } 
   }, 
   methods: {
     searchForSynonyms: function (search) {
-      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${this.search}?key=${key}`
+      let url = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${search}?key=${key}`
       fetch(url)
       .then(response => response.json())
-      .then(results => this.$data.data = results.reduce((acc, currentResult) => {
+      .then(results => this.$data.synonymList = results.reduce((acc, currentResult) => {
         currentResult.meta.syns.forEach(item => {
           item.forEach(element => {
             acc.push(element)
