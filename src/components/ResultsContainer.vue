@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <article v-for="(synonym, index) in synonymList" :key="index">
+    <article class="synonym-container" v-for="(synonym, index) in synonymList" :key="index">
       <p class="initial-synonyms" @click="getAdditionalSynonyms({synonym})">{{synonym}}</p>
 
       <template v-show="selected" v-for="(additionalSynonyms, index) in additionalSynonymList"  class="addtional-synonyms-container">
@@ -59,23 +59,23 @@ export default {
     padding: 8px; 
   }
 
-  article {
+  .synonym-container {
     cursor: pointer;
     border-radius: 25px; 
     border: 3px solid #dee4eb;
-    margin: 10px 0 10px 0; 
     width: 50%; 
     display: flex; 
     align-items: center; 
     padding: 8px; 
+    margin: 15px auto; 
   }
 
-  article:hover {
+  .synonym-container:hover {
     background-color: #dee4eb; 
     color: #36495D; 
   }
 
-  article .initial-synonyms:hover {
+  .synonym-container .initial-synonyms:hover {
     color: #36495D; 
   }
 
@@ -86,8 +86,8 @@ export default {
     font-weight: 800;
   }
 
-  .additional-synonyms-container {
-    width: 60%;
+  .addtional-synonyms-container {
+    width: 30%;
     display: flex; 
     flex-flow: wrap; 
     border-radius: 25px; 
@@ -97,7 +97,7 @@ export default {
 
   .secondary-synonyms {
     color: #47B784; 
-    font-size: 1rem; 
+    font-size: 1.5rem; 
     font-weight: 600; 
     margin: 0 5px 0 5px; 
   }
